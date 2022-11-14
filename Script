@@ -1,0 +1,70 @@
+## Automated aging report combination 
+# Created by: Hunter Hootman 6/20/2022
+# Notes: folderpath may need to be adjusted below. This is also true for the file_variable path.
+# Generated report will be named whatever you include in the name at the bottom.
+import pandas as pd
+import os
+import numpy as np
+folderpath = r"C:\FolderDirectory"
+inputlst = [os.listdir(folderpath)]
+filenamecontent = []
+filesubtotals = []
+names = []
+zerotothirty = []
+tosixty = []
+toninety = []
+toonetwenty = []
+total = []
+active = []
+for filename in os.listdir(folderpath):
+    if filename.endswith(".rpt"):
+        
+        f = open(os.path.join(folderpath,filename), 'r')
+        filenamecontent.append(f.read())
+        file_variable = open('C:\\FolderDirectory\\' + filename)
+        all_lines_variable = file_variable.readlines()
+        if len(all_lines_variable) > 45:
+            names.append(filename[12:16])
+            active.append('ACTIVE')
+            zerotothirty.append(all_lines_variable[45][11:26].rstrip().lstrip())
+            tosixty.append(all_lines_variable[45][28:41].rstrip().lstrip())
+            toninety.append(all_lines_variable[45][42:56].rstrip().lstrip())
+            toonetwenty.append(all_lines_variable[45][57:71].rstrip().lstrip())
+            total.append(all_lines_variable[45][74:88].rstrip().lstrip())
+for filename in os.listdir(folderpath):
+    if filename.endswith(".rpt"):
+        
+        f = open(os.path.join(folderpath,filename), 'r')
+        filenamecontent.append(f.read())
+        file_variable = open('C:\\FolderDirectory\\' + filename)
+        all_lines_variable = file_variable.readlines()
+        
+        if len(all_lines_variable) > 97 and 'Sub' in all_lines_variable[97]:
+            names.append(filename[12:16])
+            active.append('INACTIVE')
+            zerotothirty.append(all_lines_variable[97][11:26].rstrip().lstrip())
+            tosixty.append(all_lines_variable[97][28:41].rstrip().lstrip())
+            toninety.append(all_lines_variable[97][42:56].rstrip().lstrip())
+            toonetwenty.append(all_lines_variable[97][57:71].rstrip().lstrip())
+            total.append(all_lines_variable[97][74:88].rstrip().lstrip())
+        elif len(all_lines_variable) > 98 and 'Sub' in all_lines_variable[98]:
+            names.append(filename[12:16])
+            active.append('INACTIVE')
+            zerotothirty.append(all_lines_variable[98][11:26].rstrip().lstrip())
+            tosixty.append(all_lines_variable[98][28:41].rstrip().lstrip())
+            toninety.append(all_lines_variable[98][42:56].rstrip().lstrip())
+            toonetwenty.append(all_lines_variable[98][57:71].rstrip().lstrip())
+            total.append(all_lines_variable[98][74:88].rstrip().lstrip())
+        elif len(all_lines_variable) > 96 and 'Sub' in all_lines_variable[96]:
+            names.append(filename[12:16])
+            active.append('INACTIVE')
+            zerotothirty.append(all_lines_variable[96][11:26].rstrip().lstrip())
+            tosixty.append(all_lines_variable[96][28:41].rstrip().lstrip())
+            toninety.append(all_lines_variable[96][42:56].rstrip().lstrip())
+            toonetwenty.append(all_lines_variable[96][57:71].rstrip().lstrip())
+            total.append(all_lines_variable[96][74:88].rstrip().lstrip())
+data={'Memb':names,'Desc':active,'0:30':zerotothirty,'31:60':tosixty, '61:90':toninety, '91:120':toonetwenty,'Total':total}
+df = pd.DataFrame(data)
+df.to_excel('C:\\Folder\\FileName.xlsx', index = False)
+#This will output it wherever the python file is stored
+#df.to_excel('FileName.xlsx', index = False)
